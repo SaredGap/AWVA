@@ -1,0 +1,26 @@
+
+    .table-container {
+        margin-top: 20px;
+    }
+
+    .table-container h2 {
+        margin-bottom: 20px;
+    }
+
+    .table-responsive {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: auto;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table th, .table td {
+        text-align: center;
+    }
+
+    .btn-action {
+        margin-right: 5px;
+    }

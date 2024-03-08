@@ -1,0 +1,9 @@
+#userpassword,
+#userpassword + .btn {
+    height: 38px;
+}
+
+#userpassword-confirm,
+#userpassword-confirm + .btn {
+    height: 38px;
+}
