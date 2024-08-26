@@ -140,11 +140,26 @@ class Documento extends CI_Controller
 
     public function agregar_tipo_documento() {
         $nombreTipoDocumento = $this->input->post('nombreTipoDocumento');
+        $propositoTipoDocumento = $this->input->post('propositoTipoDocumento');
+        $contenidoTipoDocumento = $this->input->post('contenidoTipoDocumento');
+    
+        // Manejar la carga del archivo
+        $config['upload_path'] = './uploads/Ejemplos/'; // Directorio donde se almacenarán los archivos
+        $config['allowed_types'] = 'pdf|doc|docx'; // Tipos de archivos permitidos
+        $config['max_size'] = 10240; // Tamaño máximo del archivo en kilobytes (10 MB)
+        $config['file_name'] = $nombreTipoDocumento . '_' . time();
 
-       
-        $this->Documento_model->agregarTipoDocumento($nombreTipoDocumento);
-
-        
+        $this->load->library('upload', $config);
+    
+        if ($this->upload->do_upload('documento')) {
+            $documento_data = $this->upload->data();
+            $documento_path = $documento_data['file_name'];
+    
+            // Llama al modelo y pasa los datos
+            $this->Documento_model->agregarTipoDocumento($nombreTipoDocumento, $propositoTipoDocumento, $contenidoTipoDocumento, $documento_path);
+        } 
+        redirect('Admin/Dashboard/Documentos');
     }
+    
 
 }

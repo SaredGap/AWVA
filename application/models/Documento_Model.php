@@ -106,14 +106,18 @@ class Documento_model extends CI_Model
         return $query->result_array();
     }
 
-    public function agregarTipoDocumento($nombreTipoDocumento)
-    {
-        // Insertar el nuevo tipo de documento en la base de datos
+    public function agregarTipoDocumento($nombreTipoDocumento, $propositoTipoDocumento, $contenidoTipoDocumento, $documento_path) {
+        // Lógica para insertar los datos en la base de datos junto con el camino del archivo
         $data = array(
-            'nombre' => $nombreTipoDocumento
+            'nombre' => $nombreTipoDocumento,
+            'proposito' => $propositoTipoDocumento,
+            'contenido' => $contenidoTipoDocumento,
+            'documento_path' => $documento_path
         );
+    
         $this->db->insert('tipos_documentos', $data);
     }
+    
 
     
 

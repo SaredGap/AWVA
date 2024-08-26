@@ -75,7 +75,7 @@ class Dashboard extends CI_Controller
     {
         $this->form_validation->set_rules('nombre', 'Nombre', 'required');
         $this->form_validation->set_rules('apellidos', 'Apellidos', 'required');
-        $this->form_validation->set_rules('correo', 'Correo', 'required|valid_email');
+        $this->form_validation->set_rules('correo', 'Correo', 'required');
         $this->form_validation->set_rules('contrasena', 'Contraseña', 'required');
         $this->form_validation->set_rules('tipo_usuario', 'Tipo de Usuario', 'required');
 
@@ -85,7 +85,7 @@ class Dashboard extends CI_Controller
             $nombre = $this->input->post('nombre');
             $apellidos = $this->input->post('apellidos');
             $correo = $this->input->post('correo');
-            $contrasena = password_hash($this->input->post('contrasena'), PASSWORD_DEFAULT);
+            $contrasena = $this->input->post('contrasena');
             $tipo_usuario = $this->input->post('tipo_usuario');
             $data = array(
                 'nombre' => $nombre,
@@ -99,11 +99,7 @@ class Dashboard extends CI_Controller
         }
     }
 
-    public function agregar_tipo_documento() {
-        $nombreTipoDocumento = $this->input->post('nombreTipoDocumento');
-        $this->Documento_model->agregarTipoDocumento($nombreTipoDocumento);
-        redirect('Admin/Dashboard/Documentos');
-    }
+
 
     public function Documentos() {
         $data['tipo_usuario'] = $this->session->userdata('tipo_usuario');

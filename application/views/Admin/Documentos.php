@@ -17,10 +17,10 @@
 
     <div class="container mt-5">
         <h2 class="text-center">Tipos de Documentos</h2>
-        <a class="nav-link" href="#" data-toggle="modal" data-target="#modalAgregarTipoDocumento">Crear Tipo
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarTipoDocumento">Crear
+            Tipo
             de
-            Documento
-        </a>
+            Documento</button>
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
@@ -40,14 +40,16 @@
                                 <?= $tipoDocumento['nombre'] ?>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal"
                                     data-target="#editarTipoModal<?= $tipoDocumento['id'] ?>">
-                                    Editar
+                                    <img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAWpJREFUSEvNlo1NxDAMRn2bwCTAJByTAJPAJsAkxybQJ9XVl1z+U6kX6aRr2uT5sx3HJztonA7i2k2CHzu88Wtm/Bh3y/+zmT2Y2c/y/Cnvti1Tiln00QFl4xeBslaNxqCnGJ4CX1arW9glKEDUM67gMRhLv9aP3xfLvyt0fw9AlbpBb2b2uu6hRl4ll4JxTw3sMVUo6u7FYISwbzBfUtwCjpU6D2+hVvNlN8Up96LM4woIsMeYBNw8OKo4F1Pmca3Dk1AmR8A5qLtZE4q4Bkr9o15wDaoxzUJ7Fc9AvaB0xxgohcVHkKFR9sZK/YgGp6TV1X+DUDW4G6xFpUcptmYLUovi3OKW7N0NzNEghs+l4iBh2Q0c3xnFI7OnqxVcg07HmMzUEuhw7Tpyt+eUqytXcvH1ENgTaRbsjUDxHKdulxmwrg2Obq7Zw8pUXEeMIBdoDCg+28j11bmEGgEn26ebbOhH1DWvOUzxP6dTlR/hIXkuAAAAAElFTkSuQmCC" />
                                 </button>
                                 <!-- Botón para abrir el modal de confirmación de eliminación -->
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
                                     data-target="#eliminarTipoModal<?= $tipoDocumento['id'] ?>">
-                                    Eliminar
+                                    <img
+                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAPFJREFUSEvtVtEVwiAQSyfRUXQT3cxNdBN1Exuf9VEEEmyf+AGfNHch4bjegEZraMSLGuIDgK046G3EnBwxLvEZwM5JOOIuAPYK6xBT5VUlir6TmAfILoeYSqmYq5TQxT0T/Q0xbWURhWsT7LFw7hn/FI6xLL6k4tCuymuV8Nk1xVY3Iw6PPT0h63lEemVsqbhkcMFcGVtLPHWvsEOl9lYnTiV092YG1Sp2SbrijzrsVqsG0ouLDrkuLHrHzTqX/Pe9AKs3kJ8Su2QpHKeOY+pDqYF8M13GHNnhUA17JOdUogb5nNr3jBUDFPESm4uxzYgf6SOGH0AL/E4AAAAASUVORK5CYII=" />
                                 </button>
 
                                 <!-- Modal de confirmación de eliminación -->
@@ -87,7 +89,8 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editarUsuarioModalLabel<?= $tipoDocumento['id'] ?>">
+                                                <h5 class="modal-title"
+                                                    id="editarUsuarioModalLabel<?= $tipoDocumento['id'] ?>">
                                                     Editar Documento</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>

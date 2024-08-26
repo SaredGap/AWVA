@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interfaz del Usuario - Maestro</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="<?php echo base_url('assets/css/Dashboard_M.css'); ?>" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -33,20 +34,21 @@
                     <tbody>
                         <?php if (!empty($documentos)): ?>
                             <?php foreach ($documentos as $documento): ?>
-                                <tr>
-                                    <td><?= $documento['titulo'] ?></td>
-                                    <td><?= $documento['nombre_alumno'] ?></td>
-                                    <td class="<?= strtolower($documento['estado']) ?>"><?= $documento['estado'] ?></td>
-                                    <td><?= $documento['motivo'] ?? '' ?></td>
+                                <tr class="<?= 'estado-' . strtolower($documento['estado']) ?>">
+                                    <td><?= htmlspecialchars($documento['titulo']) ?></td>
+                                    <td><?= htmlspecialchars($documento['nombre_alumno']) ?></td>
+                                    <td><?= htmlspecialchars($documento['estado']) ?></td>
+                                    <td><?= htmlspecialchars($documento['motivo'] ?? '') ?></td>
                                     <td>
-                                        <?php if ($documento['estado'] === 'Pendiente'): ?>
-                                            <button class="btn btn-success"
-                                                onclick="mostrarModalAceptacion(<?= $documento['id'] ?>)">Aceptar</button>
-                                            <button class="btn btn-danger"
-                                                onclick="mostrarModalRechazo(<?= $documento['id'] ?>)">Rechazar</button>
+                                        <?php if (strtolower($documento['estado']) === 'pendiente'): ?>
+                                            <button class="btn btn-outline-success"
+                                                onclick="mostrarModalAceptacion(<?= $documento['id'] ?>)"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAMNJREFUSEvt1NsRQDAQBdCrE6UohU6ohE4oRSlyZ2TGxGM3D/xsZoyP4GSvTSr8NKqfXBj8WfIWtUWdk0APYNmv03feaq4RQOuuFUB3hb8Be5RVfgarUK6oZMVqtCQchWphNsn00N7RqAaeXUc27pcM7mFuj3AkoRJcAyDMO0eIJ6MSzPk7PAvVwFc4TyPG/7hPpSNPu53CyrNQbcV+8Uf89kSSKvXz2oqPOP8vG42RJ49YOBkKXzS4WJTShyxqKaFi8xsQxDAfuS9EkgAAAABJRU5ErkJggg=="/></button>
+                                            <button class="btn btn-outline-danger"
+                                                onclick="mostrarModalRechazo(<?= $documento['id'] ?>)"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAPFJREFUSEvtlNENwjAMRK+bwCYwCTAJowCTwCZlFHpSLEUlcc6tRPmIP1vXrz77PGCjGDbiooN/pnyX+q+k3gG4AngAeDX+7ADgNuXuWx0oM35OQBZ8A7g4cOYwl8FcF66Az6kLK1iC51DmHVvqKGAW8uBhKAuq4Bqcz01eqVObfQRcgnPxLJry5gsXBc/hi6BRqQ0yn2lr24vOinY8h1rRMDwCLm0vZ8yD4VltVceeZRSff8GVjhWfhuEKeARgtvEsk8Pv6bxWT7YCJpRHwrvTBiD8lE5mFbrUTm5B9aXSsVorlNfBIbnWJHep16gX+vYDg2Y2HyWbDqIAAAAASUVORK5CYII="/></button>
                                         <?php endif; ?>
-                                        <button class="btn btn-primary" data-toggle="modal"
-                                            data-target="#verDocumentoModal<?= $documento['id'] ?>">Ver Documento</button>
+                                        <button class="btn btn-outline-primary" data-toggle="modal"
+                                            data-target="#verDocumentoModal<?= $documento['id'] ?>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAT1JREFUSEvtl9ENwjAMBd1JgEmASYBJgEmASWATYBLoIVuqStK4IVURwhI/SZrLcxzbVDKSVSNxpQs8FZG182A3ETk6176WxcAAD302qvfa1+t33m9i4GutAMV9zQ2PgR89iLi4eSUueAnwUr3TvJokvBT4oqrd8JJgbqcdlFHlpcFu+BDgEPyNUwLM/YaM52hPchCw5+X9wdFc3Sdz/aarSQQTjdKFViKUMmZ5mpx9V/mrVpHJCi6eC/mYdMgBziIy0xJIHWaesY3CeELFwGxqQEomYCudHArQScHzQAPxkWJczG+rDYSBOQRjBi6uGJAZCug2zNXMmfJQu5Sl2DZvF3s7BGoxggu1eKVtWWDPO02t+X5wbrMXU+5WnNPexqDBLqSroSdImjU1dY+heQKO4ExHW87uOd+M9t/pCZmoTx/udBQiAAAAAElFTkSuQmCC"/>
+                                        </button>
                                     </td>
                                 </tr>
 
@@ -57,9 +59,7 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title"
-                                                    id="verDocumentoModalLabel<?= $documento['id'] ?>">Ver
-                                                    Documento</h5>
+                                                <h5 class="modal-title" id="verDocumentoModalLabel<?= $documento['id'] ?>">Ver Documento</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -76,7 +76,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="4">No hay documentos disponibles.</td>
+                                <td colspan="5">No hay documentos disponibles.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -84,7 +84,6 @@
             </div>
         </div>
     </div>
-
     <!-- Modal para aceptar documento -->
     <div class="modal fade" id="modalAceptacion" tabindex="-1" role="dialog" aria-labelledby="modalAceptacionLabel"
         aria-hidden="true">

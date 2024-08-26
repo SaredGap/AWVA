@@ -1,11 +1,16 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+/* Estilos para los diferentes estados con tonos aún más suaves */
+.estado-pendiente {
+    background-color: #fff9c4; /* Amarillo muy suave */
+    color: #212529; /* Texto oscuro para contraste */
 }
 
-.container {
-    width: 80%;
+.estado-rechazado {
+    background-color: #fddede; /* Rojo muy suave */
+    color: #212529; /* Texto oscuro para contraste */
 }
+
+.estado-aceptado {
+    background-color: #dcedc8; /* Verde muy suave */
+    color: #212529; /* Texto oscuro para contraste */
+}
+

@@ -66,3 +66,12 @@ ul li a:hover {
 .modal-footer {
     justify-content: space-between;
 }
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card {
+    transition: transform 0.2s;
+}
+

@@ -40,17 +40,18 @@
                 <?php elseif ($tipo_usuario === 'Admin'): ?>
 
                     <li class="nav-item">
-                        
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('index.php/Admin/Dashboard/Inicio'); ?>">Inicio
-                            </a>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('index.php/Admin/Dashboard/Documentos'); ?>">Tipo de Documentos</a>
+                        <a class="nav-link" href="<?php echo base_url('index.php/Admin/Dashboard/Documentos'); ?>">Tipo de
+                            Documentos</a>
                     </li>
                     <li class="nav-item">
-                       
+
                     </li>
                 <?php endif; ?>
                 <li class="nav-item">
@@ -73,11 +74,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Agrega un div con un ID único para Dropzone -->
-                    <div id="miDropzone" class="dropzone"></div>
-
                     <form id="formularioSubirDocumento" action="<?= site_url('Documento/procesar_subida') ?>"
-                        method="post">
+                        method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="tipoDocumento">Tipo de Documento:</label>
                             <select class="form-control" id="tipoDocumento" name="tipoDocumento" required>
@@ -100,6 +98,15 @@
                                 } ?>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="archivo">Subir Archivo:</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="archivo" name="archivo" accept=".pdf"
+                                    required>
+                                <label class="custom-file-label" for="archivo">Seleccionar archivo</label>
+                            </div>
+                            <small class="form-text text-muted">Solo se permiten archivos .pdf de hasta 5 MB.</small>
+                        </div>
                         <button type="button" class="btn btn-primary" onclick="confirmarSubidaDocumento()">Subir
                             Documento</button>
                     </form>
@@ -109,19 +116,32 @@
     </div>
 
     <script>
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone("#miDropzone", {
-            url: "<?= site_url('Documento/procesar_subida') ?>",
-            acceptedFiles: ".pdf, .doc, .docx",
-            maxFilesize: 5, // Tamaño máximo del archivo en MB
-            addRemoveLinks: true, // Muestra enlaces para eliminar archivos
-            dictDefaultMessage: "Arrastra y suelta archivos aquí o haz clic para seleccionar archivos",
-            dictRemoveFile: "Eliminar archivo",
-            init: function () {
-            }
+        // Actualiza el texto del label cuando se selecciona un archivo
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            var fileName = document.getElementById("archivo").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
         });
 
         function confirmarSubidaDocumento() {
+            var archivoInput = document.getElementById('archivo');
+            var archivo = archivoInput.files[0];
+
+            // Validar el tipo de archivo
+            var fileTypes = ['application/pdf'];
+            if (fileTypes.indexOf(archivo.type) === -1) {
+                alert('Por favor, selecciona un archivo válido (.pdf).');
+                return;
+            }
+
+            // Validar el tamaño del archivo (máximo 5 MB)
+            var maxSize = 5 * 1024 * 1024;
+            if (archivo.size > maxSize) {
+                alert('El archivo es demasiado grande. El tamaño máximo permitido es de 5 MB.');
+                return;
+            }
+
+            // Si pasa las validaciones, envía el formulario
             document.getElementById('formularioSubirDocumento').submit();
         }
     </script>
@@ -176,43 +196,60 @@
 
     <!-- Modal para agregar un nuevo tipo de documento -->
     <div class="modal fade" id="modalAgregarTipoDocumento" tabindex="-1" role="dialog"
-        aria-labelledby="modalAgregarTipoDocumentoLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalAgregarTipoDocumentoLabel">Agregar Tipo de Documento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Formulario para agregar un nuevo tipo de documento -->
-                    <form id="formAgregarTipoDocumento"
-                        action="<?= site_url('Admin/Dashboard/agregar_tipo_documento') ?>" method="POST">
-                        <div class="form-group">
-                            <label for="nombreTipoDocumento">Nombre del Tipo de Documento</label>
-                            <input type="text" class="form-control" id="nombreTipoDocumento" name="nombreTipoDocumento"
-                                required>
+    aria-labelledby="modalAgregarTipoDocumentoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAgregarTipoDocumentoLabel">Agregar Tipo de Documento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para agregar un nuevo tipo de documento -->
+                <form id="formAgregarTipoDocumento" action="<?= site_url('Documento/agregar_tipo_documento') ?>"
+                    method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="nombreTipoDocumento">Nombre del Tipo de Documento</label>
+                        <input type="text" class="form-control" id="nombreTipoDocumento" name="nombreTipoDocumento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propositoTipoDocumento">Propósito del Tipo de Documento</label>
+                        <input type="text" class="form-control" id="propositoTipoDocumento" name="propositoTipoDocumento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contenidoTipoDocumento">Contenido del Tipo de Documento</label>
+                        <textarea class="form-control" id="contenidoTipoDocumento" name="contenidoTipoDocumento" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="documento">Documento</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="documento" name="documento" accept=".pdf" required>
+                            <label class="custom-file-label" for="documento">Seleccionar archivo</label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Agregar</button>
-                    </form>
-                </div>
+                        <small class="form-text text-muted">Acepta archivos PDF</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function confirmarSubidaDocumento() {
-            var confirmacion = confirm("¿Estás seguro de que deseas subir el documento?");
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-            if (confirmacion) {
-                document.getElementById("formularioSubirDocumento").submit();
-            }
-        }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var customFileInput = document.querySelector('.custom-file-input');
+        var customFileLabel = document.querySelector('.custom-file-label');
+        
+        customFileInput.addEventListener('change', function () {
+            var fileName = this.files.length > 0 ? this.files[0].name : 'Seleccionar archivo';
+            customFileLabel.textContent = fileName;
+        });
+    });
+</script>
 </body>
 
 </html>

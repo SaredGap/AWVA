@@ -16,7 +16,9 @@ class Dashboard_A extends CI_Controller
 		$data['documentos'] = $this->Documento_model->obtener_documentos_del_alumno($this->session->userdata('id_usuario'));
         $data['maestros'] = $this->Documento_model->obtener_maestros();
         $data['tiposDocumentos'] = $this->Documento_model->obtener_tipos_documentos();
+        $data['documentos'] = $this->Documento_model->obtener_tipos_documentos();
         $this->load->view('Alumno/Inicio', $data);
+
        
     }
 
